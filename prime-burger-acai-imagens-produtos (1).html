@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hamburgueria Prime Burger & Açaí - Cardápio Digital</title>
+
+
+
+  <!-- Tailwind CSS -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome Icons -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts: Montserrat & Permanent Marker -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+  <script>
+
+    tailwind.config = {
+
+      theme: {
+
+        extend: {
+
+          colors: {
+
+            brand: {
+
+              orange: '#FF5500',
+
+              orangeDark: '#D94400',
+
+              yellow: '#FFB800',
+
+              darkBg: '#121212',
+
+              cardBg: '#1C1C1C',
+
+              accent: '#282828'
+
+            }
+
+          },
+
+          fontFamily: {
+
+            sans: ['Montserrat', 'sans-serif'],
+
+            marker: ['Permanent Marker', 'cursive']
+
+          }
+
+        }
+
+      }
+
+    }
+
+  </script>
+
+
+
+  <style>
+
+    html {
+      min-height: 100%;
+      background: #0E0E0E;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #0E0E0E;
+      color: #F3F4F6;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* Fundo fotográfico fixo, com camada escura para preservar a leitura */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(8, 8, 8, 0.78), rgba(8, 8, 8, 0.86)),
+        url('https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=2000&q=85');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    ::-webkit-scrollbar {
+
+      width: 8px;
+
+      height: 8px;
+
+    }
+
+    ::-webkit-scrollbar-track {
+
+      background: #0E0E0E;
+
+    }
+
+    ::-webkit-scrollbar-thumb {
+
+      background: #FF5500;
+
+      border-radius: 4px;
+
+    }
+
+
+
+    .chalk-line {
+
+      border-bottom: 2px dashed rgba(255, 85, 0, 0.4);
+
+    }
+
+
+
+    .logo-glow {
+
+      filter: drop-shadow(0px 0px 12px rgba(255, 85, 0, 0.35));
+
+    }
+
+  </style>
+
+</head>
+
+<body class="min-h-screen flex flex-col pb-28 md:pb-12">
+
+
+
+  <header class="sticky top-0 z-30 bg-black/90 backdrop-blur-md border-b border-brand-orange/30 shadow-2xl">
+
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between">
+
+
+
+      <!-- Logo Branding Header -->
+
+      <a href="#" class="flex items-center gap-3 group">
+
+        <img src="img\img_0192.PNG" alt="Prime Burger Logo" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover logo-glow transition duration-300 transform group-hover:scale-105 border border-brand-orange/30" />
+
+
+
+        <div>
+
+          <h1 class="text-lg md:text-2xl font-black tracking-wider text-white uppercase leading-tight">
+
+            Prime <span class="text-brand-orange">Burger</span>
+
+          </h1>
+
+          <p class="text-xs text-brand-yellow font-medium tracking-wide flex items-center gap-1">
+
+            <i class="fa-solid fa-fire-flame-curved text-brand-orange text-[10px]"></i> Sabor em cada mordida!
+
+          </p>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- WhatsApp Direct Header Link & Desktop Cart Toggle Button -->
+
+      <div class="flex items-center gap-3">
+
+        <a href="https://wa.me/5521988613695" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 bg-green-600/20 hover:bg-green-600 text-green-400 hover:text-white px-3.5 py-2 rounded-full font-bold text-xs border border-green-500/40 transition">
+
+          <i class="fa-brands fa-whatsapp text-base"></i>
+
+          <span>(21) 98861-3695</span>
+
+        </a>
+
+
+
+        <button onclick="toggleCart()" class="flex items-center gap-2.5 bg-brand-orange hover:bg-brand-orangeDark text-white px-4 py-2.5 rounded-full font-bold transition shadow-lg shadow-brand-orange/30">
+
+          <i class="fa-solid fa-cart-shopping text-sm md:text-base"></i>
+
+          <span class="hidden md:inline">Meu Pedido</span>
+
+          <span id="cart-badge-desktop" class="bg-white text-brand-orange rounded-full w-5 h-5 flex items-center justify-center text-xs font-black">0</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <section class="bg-gradient-to-b from-black via-brand-darkBg to-transparent border-b border-white/5 py-8 px-4 text-center relative overflow-hidden">
+
+    <div class="max-w-3xl mx-auto relative z-10">
+
+
+
+      <!-- Central Logo Display -->
+
+      <div class="w-28 h-28 md:w-36 md:h-36 mx-auto mb-4 relative flex items-center justify-center">
+
+        <div class="absolute inset-0 bg-brand-orange/20 rounded-full blur-xl animate-pulse"></div>
+
+        <img src="img\img_0192.PNG" alt="Prime Burger Logo Large" class="w-full h-full relative z-10 rounded-full object-cover logo-glow border-2 border-brand-orange/50 shadow-2xl" />
+
+      </div>
+
+
+
+      <h2 class="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-2">
+
+        FAÇA SEU PEDIDO <span class="text-brand-orange">ONLINE</span>
+
+      </h2>
+
+      <p class="text-gray-400 text-xs md:text-sm max-w-lg mx-auto mb-6">
+
+        Selecione os seus lanches, adicione ao carrinho e receba no conforto da sua casa com envio direto para o nosso WhatsApp!
+
+      </p>
+
+
+
+      <!-- Search Input -->
+
+      <div class="max-w-md mx-auto relative">
+
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+        <input 
+
+          type="text" 
+
+          id="search-input" 
+
+          oninput="handleSearch()"
+
+          placeholder="Pesquisar (ex: X-Tudo, Picanha, Cheddar, Combo)..." 
+
+          class="w-full bg-brand-cardBg text-white pl-11 pr-4 py-3 rounded-xl border border-white/10 focus:border-brand-orange focus:outline-none transition shadow-inner text-sm placeholder-gray-500"
+
+        />
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <nav class="sticky top-[61px] md:top-[69px] z-20 bg-black/95 backdrop-blur-md py-3 border-b border-white/10">
+
+    <div class="max-w-6xl mx-auto px-4 flex gap-2 overflow-x-auto no-scrollbar scroll-smooth" id="categories-container">
+
+      <!-- Generated via JS -->
+
+    </div>
+
+  </nav>
+
+
+
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+    <div id="menu-section" class="space-y-12">
+
+      <!-- Dynamic Items Rendered Here -->
+
+    </div>
+
+  </main>
+
+
+
+  <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+
+    <div class="fixed right-0 top-0 h-full w-full max-w-md bg-brand-cardBg border-l border-white/10 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300" id="cart-content">
+
+
+
+      <!-- Drawer Header -->
+
+      <div class="p-4 bg-black border-b border-white/10 flex items-center justify-between">
+
+        <div class="flex items-center gap-2.5">
+
+          <i class="fa-solid fa-basket-shopping text-brand-orange text-xl"></i>
+
+          <h3 class="text-lg font-bold text-white uppercase tracking-wider">Seu Pedido</h3>
+
+        </div>
+
+        <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2 text-xl transition">
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+      </div>
+
+
+
+      <!-- Drawer Body - Cart List & Checkout Form -->
+
+      <div class="flex-grow overflow-y-auto p-4 space-y-5">
+
+
+
+        <!-- Cart Items List -->
+
+        <div>
+
+          <h4 class="text-xs font-bold uppercase tracking-wider text-brand-yellow mb-2.5 flex items-center gap-1.5">
+
+            <i class="fa-solid fa-list-check"></i> Itens Selecionados
+
+          </h4>
+
+          <div id="cart-items" class="space-y-2.5">
+
+            <!-- Dynamic Cart Content -->
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Order Checkout Details Form -->
+
+        <div class="bg-black/60 p-4 rounded-xl border border-white/10 space-y-3.5">
+
+          <h4 class="text-xs font-bold uppercase tracking-wider text-brand-orange flex items-center gap-1.5">
+
+            <i class="fa-solid fa-truck-fast"></i> Dados de Entrega / Finalização
+
+          </h4>
+
+
+
+          <!-- Name -->
+
+
+
+<div>
+
+  <label for="customer-name" class="block text-xs font-semibold text-gray-300 mb-1">
+
+    Seu Nome *
+
+  </label>
+
+
+
+  <input
+
+    type="text"
+
+    id="customer-name"
+
+    placeholder="Ex: Maria Silva"
+
+    class="w-full bg-brand-darkBg text-white text-xs p-2.5 rounded-lg border border-white/10 focus:border-brand-orange focus:outline-none"
+
+  >
+
+</div>
+
+
+
+
+
+          <!-- Option Delivery or Pickup -->
+
+          <div>
+
+            <label class="block text-xs font-semibold text-gray-300 mb-1">Tipo de Pedido *</label>
+
+            <div class="grid grid-cols-2 gap-2">
+
+              <button type="button" id="btn-delivery" onclick="setOrderType('delivery')" class="py-2 px-3 text-xs font-bold rounded-lg border border-brand-orange bg-brand-orange text-white text-center transition">
+
+                <i class="fa-solid fa-motorcycle mr-1"></i> Entrega
+
+              </button>
+
+              <button type="button" id="btn-pickup" onclick="setOrderType('pickup')" class="py-2 px-3 text-xs font-bold rounded-lg border border-white/10 bg-brand-darkBg text-gray-400 text-center transition">
+
+                <i class="fa-solid fa-store mr-1"></i> Retirada
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Address (shown if Delivery) -->
+
+          <div id="address-container">
+
+            <label for="customer-address" class="block text-xs font-semibold text-gray-300 mb-1">Endereço Completo de Entrega *</label>
+
+            <input type="text" id="customer-address" placeholder="Rua, número, bairro e complemento" class="w-full bg-brand-darkBg text-white text-xs p-2.5 rounded-lg border border-white/10 focus:border-brand-orange focus:outline-none">
+
+          </div>
+
+
+
+          <!-- Payment Method -->
+
+          <div>
+
+            <label for="payment-method" class="block text-xs font-semibold text-gray-300 mb-1">Forma de Pagamento *</label>
+
+            <select id="payment-method" class="w-full bg-brand-darkBg text-white text-xs p-2.5 rounded-lg border border-white/10 focus:border-brand-orange focus:outline-none">
+
+              <option value="PIX">PIX</option>
+
+              <option value="Cartão de Crédito/Débito">Cartão de Crédito / Débito na Entrega</option>
+
+              <option value="Dinheiro">Dinheiro (Troco)</option>
+
+            </select>
+
+          </div>
+
+
+
+          <!-- Notes -->
+
+          <div>
+
+            <label for="order-notes" class="block text-xs font-semibold text-gray-300 mb-1">Observações do Pedido</label>
+
+            <textarea id="order-notes" rows="2" placeholder="Ex: Tirar cebola, ponto da carne, trocar molho..." class="w-full bg-brand-darkBg text-white text-xs p-2.5 rounded-lg border border-white/10 focus:border-brand-orange focus:outline-none"></textarea>
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+      <!-- Drawer Footer -->
+
+      <div class="p-4 bg-black/95 border-t border-white/10 space-y-3">
+
+        <div class="space-y-1">
+
+          <div class="flex justify-between text-gray-400 text-xs">
+
+            <span>Subtotal</span>
+
+            <span id="cart-subtotal">R$ 0,00</span>
+
+          </div>
+
+          <div class="flex justify-between text-white font-black text-lg">
+
+            <span>Total a Pagar</span>
+
+            <span id="cart-total" class="text-brand-orange">R$ 0,00</span>
+
+          </div>
+
+        </div>
+
+
+
+        <button onclick="sendWhatsAppOrder()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2.5 transition shadow-lg shadow-green-600/30 uppercase tracking-wider text-xs md:text-sm">
+
+          <i class="fa-brands fa-whatsapp text-2xl"></i>
+
+          <span>Finalizar Pedido via WhatsApp</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-black/95 border-t border-brand-orange/40 p-3 backdrop-blur-lg">
+
+    <button onclick="toggleCart()" class="w-full bg-brand-orange hover:bg-brand-orangeDark text-white py-3 px-4 rounded-xl font-bold flex items-center justify-between shadow-lg shadow-brand-orange/30">
+
+      <div class="flex items-center gap-2.5">
+
+        <span id="cart-badge-mobile" class="bg-white text-brand-orange rounded-full w-6 h-6 flex items-center justify-center text-xs font-black">0</span>
+
+        <span class="uppercase tracking-wider text-xs">Ver Carrinho</span>
+
+      </div>
+
+      <span id="cart-total-mobile" class="font-black text-sm">R$ 0,00</span>
+
+    </button>
+
+  </div>
+
+
+
+  <script>
+
+    // Complete Menu Database
+
+    const menuData = [
+
+      {
+
+        category: "Burguers Tradicionais",
+
+        icon: "fa-burger",
+
+        items: [
+
+          { id: 1, name: "Hamburguer", description: "Carne, alface, tomate e molho especial", price: 6.99, image: "img/1.png" },
+
+          { id: 2, name: "X-Burguer", description: "Carne, queijo, alface, tomate e molho especial", price: 7.99, image: "img/1.png" },
+
+          { id: 3, name: "Egg X-Burguer", description: "Carne, queijo, ovo, alface, tomate e molho especial", price: 11.99, image: "img/1.png" },
+
+          { id: 4, name: "X-Bacon", description: "Carne, queijo, bacon, alface, tomate e molho especial", price: 14.99, image: "img/1.png" },
+
+          { id: 5, name: "Egg X-Bacon", description: "Carne, queijo, bacon, ovo, alface, tomate e molho especial", price: 16.99, image: "img/1.png" },
+
+          { id: 6, name: "X-Calabresa", description: "Carne, queijo, calabresa, alface, tomate e molho especial", price: 12.99, image: "img/1.png" },
+
+          { id: 7, name: "Egg X-Calabresa", description: "Carne, queijo, calabresa, ovo, alface, tomate e molho especial", price: 14.99, image: "img/1.png" },
+
+          { id: 8, name: "X-Tudo", description: "Carne, queijo, ovo, calabresa, bacon, alface, tomate e molho especial", price: 14.99, image: "img/1.png" },
+
+          { id: 9, name: "X-Duplo", description: "2 carnes, 2 ovos, queijo, bacon, calabresa, alface, tomate e molho", price: 19.99, image: "img/1.png" },
+
+          { id: 10, name: "X-Triplo", description: "3 carnes, 3 ovos, queijo, bacon, calabresa, alface, tomate e molho", price: 25.99, image: "img/1.png" },
+
+          { id: 11, name: "Burg 1", description: "1 carne, queijo e salada", price: 8.00, image: "img/1.png" },
+
+          { id: 12, name: "Burg 2", description: "2 carnes, 2 queijos e salada", price: 12.00, image: "img/1.png" },
+
+          { id: 13, name: "Burg 3", description: "3 carnes, 3 queijos e salada", price: 14.99, image: "img/1.png" },
+
+          { id: 14, name: "Burg 4", description: "4 carnes, 4 queijos e salada", price: 16.99, image: "img/1.png" },
+
+          { id: 15, name: "Burg Calabresa 1", description: "1 carne, queijo, calabresa e salada", price: 12.99, image: "img/1.png" },
+
+          { id: 16, name: "Burg Calabresa 2", description: "2 carnes, 2 queijos, calabresa e salada", price: 15.99, image: "img/1.png" },
+
+          { id: 17, name: "Burg Calabresa 3", description: "3 carnes, 3 queijos, calabresa e salada", price: 17.99, image: "img/1.png" },
+
+          { id: 18, name: "Burg Calabresa 4", description: "4 carnes, 4 queijos, calabresa e salada", price: 20.99, image: "img/1.png" },
+
+          { id: 19, name: "Burg Bacon 1", description: "1 carne, queijo e bacon", price: 11.99, image: "img/1.png" },
+
+          { id: 20, name: "Burg Bacon 2", description: "2 carnes, 2 queijos, bacon e salada", price: 15.99, image: "img/1.png" },
+
+          { id: 21, name: "Burg Bacon 3", description: "3 carnes, 3 queijos e bacon e salada", price: 17.99, image: "img/1.png" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Artesanal",
+
+        icon: "fa-fire-flame-curved",
+
+        items: [
+
+          { id: 22, name: "Artesanal Caramelizado", description: "Blend Artesanal de 130gr, molho especial, cheddar, alface, tomate e cebola caramelizada no shoyu", price: 24.99, image: "" },
+
+          { id: 23, name: "Artesanal Geleia de Pimenta", description: "Blend Especial Artesanal de 130gr, cheddar, molho especial, geleia de pimenta e Doritos", price: 24.99, image: "" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Combos",
+
+        icon: "fa-utensils",
+
+        items: [
+
+          { id: 24, name: "Combo X-Tudo + Nugget + Iko", description: "X-Tudo + Porção de Nugget + Refrimix Iko", price: 24.99, image: "" },
+
+          { id: 25, name: "Combo X-Tudo + Batata + Iko", description: "X-Tudo + Batata Frita + Refrimix Iko", price: 24.99, image: "" },
+
+          { id: 26, name: "Combo X-Tudo + Anéis de Cebola + Iko", description: "X-Tudo + Anéis de Cebola + Refrimix Iko", price: 24.99, image: "" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Linha Cheddar",
+
+        icon: "fa-cheese",
+
+        items: [
+
+          { id: 27, name: "Burg Cheddar 1", description: "1 carne, 1 fatia de cheddar e salada", price: 8.99, image: "" },
+
+          { id: 28, name: "Burg Cheddar 2", description: "2 carnes, 2 fatias de cheddar e salada", price: 13.99, image: "" },
+
+          { id: 29, name: "Burg Cheddar 3", description: "3 carnes, 3 fatias de cheddar e salada", price: 15.99, image: "" },
+
+          { id: 30, name: "Burg Cheddar 4", description: "4 carnes, 4 fatias de cheddar e salada", price: 18.99, image: "" },
+
+          { id: 31, name: "Burg Cheddar Calabresa 1", description: "1 carne, 1 fatia de cheddar, calabresa e salada", price: 13.99, image: "" },
+
+          { id: 32, name: "Burg Cheddar Calabresa 2", description: "2 carnes, 2 fatias de cheddar, calabresa e salada", price: 15.99, image: "" },
+
+          { id: 33, name: "Burg Cheddar Calabresa 3", description: "3 carnes, 3 fatias de cheddar, calabresa e salada", price: 17.99, image: "" },
+
+          { id: 34, name: "Burg Cheddar Bacon 1", description: "1 carne, 1 fatia de cheddar, bacon e salada", price: 14.99, image: "" },
+
+          { id: 35, name: "Burg Cheddar Bacon 2", description: "2 carnes, 2 fatias de cheddar, bacon e salada", price: 16.99, image: "" },
+
+          { id: 36, name: "Burg Cheddar Bacon 3", description: "3 carnes, 3 fatias de cheddar, bacon e salada", price: 18.99, image: "" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Linha Picanha",
+
+        icon: "fa-drumstick-bite",
+
+        items: [
+
+          { id: 37, name: "Picanha Burguer Cheddar", description: "Hambúrguer de Picanha suculento com queijo cheddar cremoso", price: 16.99, image: "" },
+
+          { id: 38, name: "Picanha Bacon Cheddar", description: "Picanha, bacon crocante e queijo cheddar", price: 22.99, image: "" },
+
+          { id: 39, name: "Picanha Calabresa Cheddar", description: "Picanha, calabresa fatiada e queijo cheddar", price: 22.99, image: "" },
+
+          { id: 40, name: "Picanha Master", description: "Hambúrguer especial de Picanha artesanal", price: 24.99, image: "" },
+
+          { id: 41, name: "Picanha Duplo Cheddar Bacon", description: "2 carnes picanha, cheddar duplo e bacon crocante", price: 28.99, image: "" },
+
+          { id: 42, name: "Picanha Duplo Cheddar Calabresa", description: "2 carnes picanha, cheddar duplo e calabresa fatiada", price: 28.99, image: "" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Lanches Especiais",
+
+        icon: "fa-crown",
+
+        items: [
+
+          { id: 43, name: "Mega Tudão", description: "2 carnes, 1 ovo, bacon, calabresa, frango, linguiça mineira, queijo, alface, tomate e molho especial", price: 24.99, image: "" },
+
+          { id: 44, name: "Furioso Bacon Cheddar", description: "4 carnes, queijo, bacon, alface, tomate e molho especial", price: 25.99, image: "" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Batata Maluca",
+
+        icon: "fa-box-tissue",
+
+        items: [
+
+          { id: 47, name: "Batata Maluca Comum (P)", description: "Batata frita com cheddar e orégano (P)", price: 16.99, image: "" },
+
+          { id: 48, name: "Batata Maluca Comum (M)", description: "Batata frita com cheddar e orégano (M)", price: 21.99, image: "" },
+
+          { id: 49, name: "Batata Maluca Comum (G)", description: "Batata frita com cheddar e orégano (G)", price: 28.99, image: "" },
+
+
+
+          { id: 50, name: "Batata Maluca C/ Queijo (P)", description: "Batata frita com queijo, cheddar e orégano (P)", price: 21.99, image: "" },
+
+          { id: 51, name: "Batata Maluca C/ Queijo (M)", description: "Batata frita com queijo, cheddar e orégano (M)", price: 32.99, image: "" },
+
+          { id: 52, name: "Batata Maluca C/ Queijo (G)", description: "Batata frita com queijo, cheddar e orégano (G)", price: 39.99, image: "" },
+
+
+
+          { id: 53, name: "Batata Maluca C/ Calabresa e Queijo (P)", description: "Calabresa, queijo, cheddar e orégano (P)", price: 21.99, image: "" },
+
+          { id: 54, name: "Batata Maluca C/ Calabresa e Queijo (M)", description: "Calabresa, queijo, cheddar e orégano (M)", price: 36.99, image: "" },
+
+          { id: 55, name: "Batata Maluca C/ Calabresa e Queijo (G)", description: "Calabresa, queijo, cheddar e orégano (G)", price: 44.99, image: "" },
+
+
+
+          { id: 56, name: "Batata Maluca C/ Bacon e Queijo (P)", description: "Bacon crocante, queijo, cheddar e orégano (P)", price: 21.99, image: "" },
+
+          { id: 57, name: "Batata Maluca C/ Bacon e Queijo (M)", description: "Bacon crocante, queijo, cheddar e orégano (M)", price: 36.99, image: "" },
+
+          { id: 58, name: "Batata Maluca C/ Bacon e Queijo (G)", description: "Bacon crocante, queijo, cheddar e orégano (G)", price: 44.99, image: "" },
+
+
+
+          { id: 59, name: "Batata Maluca C/ Linguiça Mineira e Queijo (P)", description: "Linguiça mineira, queijo, cheddar e orégano (P)", price: 21.99, image: "" },
+
+          { id: 60, name: "Batata Maluca C/ Linguiça Mineira e Queijo (M)", description: "Linguiça mineira, queijo, cheddar e orégano (M)", price: 36.99, image: "" },
+
+          { id: 61, name: "Batata Maluca C/ Linguiça Mineira e Queijo (G)", description: "Linguiça mineira, queijo, cheddar e orégano (G)", price: 44.99, image: "" },
+
+
+
+          { id: 62, name: "Batata Maluca C/ Frango e Queijo (P)", description: "Filé de frango, queijo, cheddar e orégano (P)", price: 21.99, image: "" },
+
+          { id: 63, name: "Batata Maluca C/ Frango e Queijo (M)", description: "Filé de frango, queijo, cheddar e orégano (M)", price: 36.99, image: "" },
+
+          { id: 64, name: "Batata Maluca C/ Frango e Queijo (G)", description: "Filé de frango, queijo, cheddar e orégano (G)", price: 44.99, image: "" }
+
+        ]
+
+      },
+
+      {
+
+        category: "Porções & Extras",
+
+        icon: "fa-bowl-food",
+
+        items: [
+
+          { id: 45, name: "Turbine sua Picanha - Batata", description: "Acompanhamento de batata frita para o seu lanche", price: 7.99, image: "" },
+
+          { id: 46, name: "Turbine sua Picanha - Nugget ou Anéis", description: "5 unidades de nuggets ou anéis de cebola", price: 8.99, image: "" },
+
+          { id: 65, name: "Porção Nuggets (8 Unid)", description: "8 deliciosas unidades de nuggets crocantes", price: 12.99, image: "" },
+
+          { id: 66, name: "Porção Nuggets (15 Unid)", description: "15 deliciosas unidades de nuggets crocantes", price: 18.99, image: "" },
+
+          { id: 67, name: "Porção Nuggets (18 Unid)", description: "18 unidades de nuggets crocantes", price: 20.99, image: "" },
+
+          { id: 68, name: "Anéis de Cebola C/ Queijo (15 Unid)", description: "15 anéis de cebola crocantes acompanhados com queijo", price: 21.99, image: "" }
+
+        ]
+
+      }
+
+    ];
+
+
+
+    // State Variables
+
+    let cart = [];
+
+    let selectedCategory = "Todas";
+
+    let orderType = 'delivery'; // 'delivery' or 'pickup'
+
+
+
+    // Format Currency Helper
+
+    function formatCurrency(val) {
+
+      return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    }
+
+
+
+    function renderCategories() {
+
+      const container = document.getElementById('categories-container');
+
+      const categories = ["Todas", ...menuData.map(c => c.category)];
+
+
+
+      container.innerHTML = categories.map((cat) => {
+
+        const isActive = selectedCategory === cat;
+
+        return `
+
+          <button 
+
+            onclick="selectCategory('${cat}')" 
+
+            class="px-4 py-2 rounded-full font-bold text-xs md:text-sm whitespace-nowrap transition flex items-center gap-2 ${
+
+              isActive 
+
+                ? 'bg-brand-orange text-white shadow-md shadow-brand-orange/30' 
+
+                : 'bg-brand-cardBg text-gray-300 hover:bg-white/10'
+
+            }"
+
+          >
+
+            ${cat}
+
+          </button>
+
+        `;
+
+      }).join('');
+
+    }
+
+
+
+    function selectCategory(cat) {
+
+      selectedCategory = cat;
+
+      renderCategories();
+
+      renderMenu();
+
+    }
+
+
+
+    function renderMenu(searchTerm = '') {
+
+      const container = document.getElementById('menu-section');
+
+      container.innerHTML = '';
+
+
+
+      menuData.forEach(cat => {
+
+        if (selectedCategory !== "Todas" && selectedCategory !== cat.category) return;
+
+
+
+        const filteredItems = cat.items.filter(item => 
+
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+
+          item.description.toLowerCase().includes(searchTerm.toLowerCase())
+
+        );
+
+
+
+        if (filteredItems.length === 0) return;
+
+
+
+        const categoryHTML = `
+
+          <section class="space-y-4">
+
+            <div class="flex items-center gap-3 chalk-line pb-2">
+
+              <i class="fa-solid ${cat.icon} text-brand-orange text-xl"></i>
+
+              <h3 class="text-xl md:text-2xl font-black text-white uppercase tracking-wider">${cat.category}</h3>
+
+            </div>
+
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+              ${filteredItems.map(item => `
+
+                <div class="bg-brand-cardBg rounded-2xl p-4 border border-white/5 hover:border-brand-orange/40 transition flex flex-col justify-between group shadow-xl">
+
+                  
+                  <!-- Slot de imagem individual: configure item.image no menuData -->
+                  <div class="w-full aspect-[16/9] rounded-xl overflow-hidden mb-4 bg-black/40 border border-white/10 flex items-center justify-center">
+                    ${item.image
+                      ? `<img src="${item.image}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover">`
+                      : `<div class="flex flex-col items-center justify-center text-gray-500 gap-2"><i class="fa-regular fa-image text-3xl text-brand-orange/70"></i><span class="text-xs">Adicionar foto do produto</span></div>`
+                    }
+                  </div>
+<div>
+
+                    <div class="flex justify-between items-start mb-2 gap-2">
+
+                      <h4 class="font-bold text-white text-base md:text-lg group-hover:text-brand-orange transition">${item.name}</h4>
+
+                      <span class="font-black text-brand-yellow text-sm md:text-base whitespace-nowrap">${formatCurrency(item.price)}</span>
+
+                    </div>
+
+                    <p class="text-xs md:text-sm text-gray-400 mb-4 leading-relaxed">${item.description}</p>
+
+                  </div>
+
+                  <button 
+
+                    onclick="addToCart(${item.id})" 
+
+                    class="w-full bg-white/5 hover:bg-brand-orange text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition text-xs md:text-sm border border-white/10 group-hover:border-transparent"
+
+                  >
+
+                    <i class="fa-solid fa-plus text-xs"></i>
+
+                    <span>Adicionar ao Pedido</span>
+
+                  </button>
+
+                </div>
+
+              `).join('')}
+
+            </div>
+
+          </section>
+
+        `;
+
+
+
+        container.innerHTML += categoryHTML;
+
+      });
+
+
+
+      if (container.innerHTML === '') {
+
+        container.innerHTML = `
+
+          <div class="text-center py-16 text-gray-500">
+
+            <i class="fa-solid fa-magnifying-glass text-4xl mb-3 text-brand-orange/40"></i>
+
+            <p class="text-sm">Nenhum item encontrado para a sua busca.</p>
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+
+    function handleSearch() {
+
+      const term = document.getElementById('search-input').value;
+
+      renderMenu(term);
+
+    }
+
+
+
+    function addToCart(itemId) {
+
+      let item = null;
+
+      for (const cat of menuData) {
+
+        const found = cat.items.find(i => i.id === itemId);
+
+        if (found) { item = found; break; }
+
+      }
+
+      if (!item) return;
+
+
+
+      const existing = cart.find(c => c.id === itemId);
+
+      if (existing) {
+
+        existing.quantity += 1;
+
+      } else {
+
+        cart.push({ ...item, quantity: 1 });
+
+      }
+
+
+
+      updateCart();
+
+      showToast(`${item.name} adicionado ao carrinho!`);
+
+    }
+
+
+
+    function updateQuantity(itemId, change) {
+
+      const index = cart.findIndex(c => c.id === itemId);
+
+      if (index !== -1) {
+
+        cart[index].quantity += change;
+
+        if (cart[index].quantity <= 0) {
+
+          cart.splice(index, 1);
+
+        }
+
+      }
+
+      updateCart();
+
+    }
+
+
+
+    function updateCart() {
+
+      const totalItems = cart.reduce((acc, i) => acc + i.quantity, 0);
+
+      const totalPrice = cart.reduce((acc, i) => acc + (i.price * i.quantity), 0);
+
+
+
+      document.getElementById('cart-badge-desktop').innerText = totalItems;
+
+      document.getElementById('cart-badge-mobile').innerText = totalItems;
+
+      document.getElementById('cart-subtotal').innerText = formatCurrency(totalPrice);
+
+      document.getElementById('cart-total').innerText = formatCurrency(totalPrice);
+
+      document.getElementById('cart-total-mobile').innerText = formatCurrency(totalPrice);
+
+
+
+      const cartItemsContainer = document.getElementById('cart-items');
+
+      if (cart.length === 0) {
+
+        cartItemsContainer.innerHTML = `
+
+          <div class="text-center py-8 text-gray-500">
+
+            <i class="fa-solid fa-basket-shopping text-3xl mb-2 text-brand-orange/40"></i>
+
+            <p class="text-xs">Seu carrinho está vazio no momento.</p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+
+      cartItemsContainer.innerHTML = cart.map(item => `
+
+        <div class="bg-brand-darkBg p-2.5 rounded-xl border border-white/5 flex items-center justify-between">
+
+          <div class="flex-grow pr-2">
+
+            <h5 class="text-white font-bold text-xs leading-tight">${item.name}</h5>
+
+            <span class="text-brand-orange text-xs font-semibold">${formatCurrency(item.price * item.quantity)}</span>
+
+          </div>
+
+          <div class="flex items-center gap-2 bg-black rounded-lg px-2 py-1 border border-white/10">
+
+            <button onclick="updateQuantity(${item.id}, -1)" class="text-gray-400 hover:text-white px-1.5 text-xs font-bold">-</button>
+
+            <span class="text-white font-bold text-xs">${item.quantity}</span>
+
+            <button onclick="updateQuantity(${item.id}, 1)" class="text-brand-orange hover:text-white px-1.5 text-xs font-bold">+</button>
+
+          </div>
+
+        </div>
+
+      `).join('');
+
+    }
+
+
+
+    function setOrderType(type) {
+
+      orderType = type;
+
+      const btnDelivery = document.getElementById('btn-delivery');
+
+      const btnPickup = document.getElementById('btn-pickup');
+
+      const addressContainer = document.getElementById('address-container');
+
+
+
+      if (type === 'delivery') {
+
+        btnDelivery.className = "py-2 px-3 text-xs font-bold rounded-lg border border-brand-orange bg-brand-orange text-white text-center transition";
+
+        btnPickup.className = "py-2 px-3 text-xs font-bold rounded-lg border border-white/10 bg-brand-darkBg text-gray-400 text-center transition";
+
+        addressContainer.style.display = 'block';
+
+      } else {
+
+        btnPickup.className = "py-2 px-3 text-xs font-bold rounded-lg border border-brand-orange bg-brand-orange text-white text-center transition";
+
+        btnDelivery.className = "py-2 px-3 text-xs font-bold rounded-lg border border-white/10 bg-brand-darkBg text-gray-400 text-center transition";
+
+        addressContainer.style.display = 'none';
+
+      }
+
+    }
+
+
+
+    function toggleCart() {
+
+      const drawer = document.getElementById('cart-drawer');
+
+      const content = document.getElementById('cart-content');
+
+
+
+      if (drawer.classList.contains('pointer-events-none')) {
+
+        drawer.classList.remove('pointer-events-none', 'opacity-0');
+
+        drawer.classList.add('opacity-100');
+
+        content.classList.remove('translate-x-full');
+
+      } else {
+
+        drawer.classList.add('pointer-events-none', 'opacity-0');
+
+        drawer.classList.remove('opacity-100');
+
+        content.classList.add('translate-x-full');
+
+      }
+
+    }
+
+
+
+    function showToast(msg) {
+
+      const toast = document.createElement('div');
+
+      toast.className = 'fixed bottom-20 md:bottom-8 right-4 bg-brand-orange text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-2xl z-50 transition-all transform translate-y-2 opacity-0';
+
+      toast.innerText = msg;
+
+      document.body.appendChild(toast);
+
+
+
+      setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+
+      setTimeout(() => {
+
+        toast.classList.add('opacity-0', 'translate-y-2');
+
+        setTimeout(() => toast.remove(), 300);
+
+      }, 2000);
+
+    }
+
+
+
+   function sendWhatsAppOrder() {
+
+  if (cart.length === 0) {
+
+    showToast("Adicione pelo menos um item para finalizar!");
+
+    return;
+
+  }
+
+
+
+  const nameField = document.getElementById('customer-name');
+
+  const addressField = document.getElementById('customer-address');
+
+  const paymentField = document.getElementById('payment-method');
+
+  const notesField = document.getElementById('order-notes');
+
+
+
+  const fields = {
+
+    'customer-name': nameField,
+
+    'customer-address': addressField,
+
+    'payment-method': paymentField,
+
+    'order-notes': notesField
+
+  };
+
+
+
+  const missing = Object.keys(fields).filter(id => !fields[id]);
+
+
+
+  if (missing.length > 0) {
+
+    alert('Campos ausentes no HTML:\n' + missing.join('\n'));
+
+    console.error('Campos ausentes:', missing);
+
+    return;
+
+  }
+
+
+
+  const name = nameField.value.trim();
+
+  const address = addressField.value.trim();
+
+  const payment = paymentField.value;
+
+  const notes = notesField.value.trim();
+
+
+
+  if (!name) {
+
+    alert("Por favor, preencha o seu nome.");
+
+    nameField.focus();
+
+    return;
+
+  }
+
+
+
+  if (orderType === 'delivery' && !address) {
+
+    alert("Por favor, informe o seu endereço de entrega.");
+
+    addressField.focus();
+
+    return;
+
+  }
+
+
+
+  if (!payment) {
+
+    alert("Por favor, selecione a forma de pagamento.");
+
+    paymentField.focus();
+
+    return;
+
+  }
+
+
+
+  const totalPrice = cart.reduce(
+
+    (acc, item) => acc + item.price * item.quantity,
+
+    0
+
+  );
+
+
+
+  // Emojis escritos com Unicode explícito
+
+  const emoji = {
+
+    burger: '\u{1F354}',
+
+    bag: '\u{1F6CD}',
+
+    person: '\u{1F464}',
+
+    name: '\u{1F64B}',
+
+    location: '\u{1F4CD}',
+
+    house: '\u{1F3E0}',
+
+    card: '\u{1F4B3}',
+
+    quantity: '\u{1F522}',
+
+    money: '\u{1F4B5}',
+
+    total: '\u{1F4B0}',
+
+    notes: '\u{1F4DD}',
+
+    check: '\u{2705}',
+
+    heart: '\u{2764}\u{FE0F}'
+
+  };
+
+
+
+  let msg = `${emoji.burger} *PRIME BURGER & AÇAÍ*
+
+━━━━━━━━━━━━━━━━━━
+
+${emoji.bag} *NOVO PEDIDO*
+
+━━━━━━━━━━━━━━━━━━
+
+
+
+${emoji.person} *DADOS DO CLIENTE*
+
+
+
+${emoji.name} *Nome:* ${name}
+
+${emoji.location} *Tipo:* ${orderType === 'delivery' ? 'Entrega' : 'Retirada no Balcão'}
+
+`;
+
+
+
+  if (orderType === 'delivery') {
+
+    msg += `${emoji.house} *Endereço:* ${address}\n`;
+
+  }
+
+
+
+  msg += `${emoji.card} *Pagamento:* ${payment}
+
+
+
+━━━━━━━━━━━━━━━━━━
+
+${emoji.burger} *ITENS DO PEDIDO*
+
+━━━━━━━━━━━━━━━━━━
+
+`;
+
+
+
+  cart.forEach((item, index) => {
+
+    msg += `\n${String(index + 1).padStart(2, '0')}. *${item.name}*\n`;
+
+    msg += `   ${emoji.quantity} Quantidade: ${item.quantity}x\n`;
+
+    msg += `   ${emoji.money} Subtotal: ${formatCurrency(item.price * item.quantity)}\n`;
+
+  });
+
+
+
+  msg += `
+
+━━━━━━━━━━━━━━━━━━
+
+${emoji.total} *VALOR TOTAL: ${formatCurrency(totalPrice)}*
+
+━━━━━━━━━━━━━━━━━━
+
+`;
+
+
+
+  if (notes) {
+
+    msg += `\n${emoji.notes} *OBSERVAÇÕES:*\n${notes}\n`;
+
+  }
+
+
+
+  msg += `
+
+${emoji.check} *Pedido enviado para confirmação!*
+
+
+
+${emoji.heart} Obrigado por escolher
+
+*PRIME BURGER & AÇAÍ!*`;
+
+console.log("Teste de emoji:", "\u{1F354} \u{1F4B0} \u{2705}");
+
+console.log("Mensagem contém caractere corrompido:", msg.includes("\uFFFD"));
+
+  const phoneNumber = "5521988613695";
+
+const whatsappUrl = "https://api.whatsapp.com/send?phone="
+
+  + phoneNumber
+
+  + "&text="
+
+  + encodeURIComponent(msg);
+
+
+
+window.open(whatsappUrl, "_blank");
+
+}
+
+    // Initialization
+
+    window.onload = function() {
+
+      renderCategories();
+
+      renderMenu();
+
+      updateCart();
+
+    };
+
+  </script>
+
+</body>
+
+</html>
